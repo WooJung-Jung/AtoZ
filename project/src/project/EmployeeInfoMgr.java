@@ -17,4 +17,13 @@ public class EmployeeInfoMgr {
             return false;
         }
     }
+
+    public List<Employee> delete(HashMap<Integer,Employee> employeeHashMap, Option2 option2) {
+        List<Employee> employeeList = option2.execute(employeeHashMap);
+        for(Employee employee : employeeList) {
+            employeeHashMap.remove(employee.getEmployeeNum());
+        }
+        return employeeList;
+    }
+
 }
