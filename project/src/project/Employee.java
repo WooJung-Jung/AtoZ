@@ -12,4 +12,25 @@ public class Employee {
     private String phoneNum;
     private Date birthday;
     private String certi;
+
+    public Employee(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) throws ParseException {
+        this.employeeNum = Integer.parseInt(employeeNum);
+        this.firstName = name.substring(0, name.indexOf(' '));
+        this.lastName = name.substring(name.indexOf(' ') + 1);
+        this.cl = cl;
+        this.phoneNum = phoneNum;
+        this.birthday = new SimpleDateFormat("yyyyMMdd").parse(birthday);
+        this.certi = certi;
+    }
+
+    public Integer getEmployeeNum() { return employeeNum; }
+
+    public String print() {
+        return employeeNum + ","
+                + firstName + " " + lastName + ","
+                + cl  + ","
+                + phoneNum + ","
+                + new SimpleDateFormat("yyyyMMdd").format(birthday) + ","
+                + certi;
+    }
 }
