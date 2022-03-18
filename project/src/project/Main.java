@@ -10,5 +10,8 @@ public class Main {
 		IOManager inputManager = new IOManager();
 		input = inputManager.read("input.txt");
 		
+		Parser parser = new Parser();
+		ArrayList<Variable> cmd = parser.parse(input);
+		
 	}
 }
