@@ -26,4 +26,7 @@ public class EmployeeInfoMgr {
         return employeeList;
     }
 
+    public List<Employee> search(HashMap<Integer,Employee> employeeHashMap, Option2 option2) {
+        return option2.execute(employeeHashMap);
+    }
 }
