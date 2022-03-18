@@ -123,5 +123,55 @@ public class employeeInfoMgrTest {
             Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
             Assertions.assertEquals(expectOutData, employeeInfo.getInfoTable("employeeNum").get(employeeNum).print());
         }
+
+        @Test
+        @DisplayName("Modify Employee by Mock")
+        void ModifyEmployeeByMock() {
+            String commandData = "name,FB NTAWR,cl,CL3";
+
+            option2 = mock(Option2.class);
+            employeeInfoMgr = mock(EmployeeInfoMgr.class);
+
+            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            try {
+                when(employeeInfoMgr.modify(any(), any(), anyString())).thenReturn(Arrays.asList(employee));
+
+                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), option2, commandData);
+
+                Assertions.assertEquals(false, prevList.isEmpty());
+                Assertions.assertEquals(1, prevList.size());
+                Assertions.assertEquals(expectOutData, prevList.get(0).print());
+            }
+            catch (Exception e) {
+                Assertions.fail();
+            }
+        }
+
+        @Test
+        @DisplayName("Modify Employee by Implement")
+        void ModifyEmployeeByImpl() {
+            String commandData = "name,VXIHXOTH JHOP,cl,CL4";
+            String modifiedData = "15123099,VXIHXOTH JHOP,CL4,010-3112-2609,19771211,ADV";
+
+            option2 = mock(Option2.class);
+            employeeInfoMgr = new EmployeeInfoMgr();
+            employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), inputCmdData);
+
+            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+
+            try {
+                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), option2, commandData);
+
+                Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
+                Assertions.assertEquals(false, prevList.isEmpty());
+                Assertions.assertEquals(1, prevList.size());
+                Assertions.assertEquals(expectOutData, prevList.get(0).print());
+                Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
+                Assertions.assertEquals(modifiedData, employeeInfo.getInfoTable("employeeNum").get(employeeNum).print());
+            }
+            catch (Exception ex) {
+                Assertions.fail();
+            }
+        }
     }
 }
