@@ -33,4 +33,25 @@ public class Employee {
                 + new SimpleDateFormat("yyyyMMdd").format(birthday) + ","
                 + certi;
     }
+
+    public void modify(String field, String value) throws ParseException {
+        switch (field) {
+            case "name":
+                this.firstName = value.substring(0, value.indexOf(' '));
+                this.lastName = value.substring(value.indexOf(' ') + 1);
+                break;
+            case "cl":
+                this.cl = value;
+                break;
+            case "phoneNum":
+                this.phoneNum = value;
+                break;
+            case "birthday":
+                this.birthday = new SimpleDateFormat("yyyyMMdd").parse(value);
+                break;
+            case "certi":
+                this.certi = value;
+                break;
+        }
+    }
 }

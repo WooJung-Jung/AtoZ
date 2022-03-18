@@ -29,4 +29,15 @@ public class EmployeeInfoMgr {
     public List<Employee> search(HashMap<Integer,Employee> employeeHashMap, Option2 option2) {
         return option2.execute(employeeHashMap);
     }
+
+    public List<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Option2 option2, String commandData) throws Exception {
+        String[] param = commandData.split(",");
+        if (param.length != 4) throw new Exception("잘못된 명령입니다.");
+
+        List<Employee> employeeList = option2.execute(employeeHashMap);
+        for(Employee employee : employeeList) {
+            employeeHashMap.get(employee.getEmployeeNum()).modify(param[2], param[3]);
+        }
+        return employeeList;
+    }
 }
