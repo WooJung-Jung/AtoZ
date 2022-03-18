@@ -88,5 +88,40 @@ public class employeeInfoMgrTest {
             Assertions.assertEquals(false, employeeInfo.getInfoTable("employeeNum").containsKey(employeeNum));
             Assertions.assertEquals(0, employeeInfo.getInfoTable("employeeNum").size());
         }
+
+        @Test
+        @DisplayName("Search Employee by Mock")
+        void SearchEmployeeByMock() {
+            option2 = mock(Option2.class);
+            employeeInfoMgr = mock(EmployeeInfoMgr.class);
+
+            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            when(employeeInfoMgr.search(any(), any())).thenReturn(Arrays.asList(employee));
+
+            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), option2);
+
+            Assertions.assertEquals(false, findedList.isEmpty());
+            Assertions.assertEquals(1, findedList.size());
+            Assertions.assertEquals(expectOutData, findedList.get(0).print());
+        }
+
+        @Test
+        @DisplayName("Search Employee by Impl")
+        void SearchEmployeeByImpl() {
+            option2 = mock(Option2.class);
+            employeeInfoMgr = new EmployeeInfoMgr();
+            employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), inputCmdData);
+
+            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+
+            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), option2);
+
+            Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
+            Assertions.assertEquals(false, findedList.isEmpty());
+            Assertions.assertEquals(1, findedList.size());
+            Assertions.assertEquals(expectOutData, findedList.get(0).print());
+            Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
+            Assertions.assertEquals(expectOutData, employeeInfo.getInfoTable("employeeNum").get(employeeNum).print());
+        }
     }
 }
