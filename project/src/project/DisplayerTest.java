@@ -8,9 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -72,6 +77,43 @@ class DisplayerTest {
     }
 
     @Test
-    void setDisplayStrategy() {
+    void setListDisplayStrategy_Obj_Test() {
+
+        try{
+            Displayer player = new Displayer();
+            ListDisplayStrategy listDisplayStrategy = new ListDisplayStrategy();
+
+            Field field = player.getClass().getDeclaredField("strategy");
+            field.setAccessible(true);
+
+            player.setDisplayStrategy(listDisplayStrategy);
+            DisplayStrategy strategy = (DisplayStrategy)field.get(player);
+
+            assertEquals(listDisplayStrategy, strategy);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e){
+            e.printStackTrace();
+        }
+    }
+
+    void setCountDisplayStrategy_Obj_Test() {
+
+        try{
+            Displayer player = new Displayer();
+            CountDisplayStrategy countDisplayStrategy = new CountDisplayStrategy();
+
+            Field field = player.getClass().getDeclaredField("strategy");
+            field.setAccessible(true);
+
+            player.setDisplayStrategy(countDisplayStrategy);
+            DisplayStrategy strategy = (DisplayStrategy)field.get(player);
+
+            assertEquals(countDisplayStrategy, strategy);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e){
+            e.printStackTrace();
+        }
     }
 }
