@@ -2,6 +2,8 @@ package project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 class ParserTest {
@@ -13,6 +15,8 @@ class ParserTest {
 		
 		assertTrue(new Parser().optionValid(new Option("-p", " ", " ")));
 		assertFalse(new Parser().optionValid(new Option("-p", "", " ")));
+		
+		assertTrue(new Parser().dataValid(new ArrayList<Data>()));
 		
 		assertTrue(new Parser().employeeNumValid("12345678"));
 		assertFalse(new Parser().employeeNumValid("1"));
@@ -28,6 +32,7 @@ class ParserTest {
 		
 		assertTrue(new Parser().certiValid("PRO"));
 		assertFalse(new Parser().certiValid("PROO"));
+		
 	}
 
 }
