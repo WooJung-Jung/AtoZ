@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,8 +17,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SearcherTest {
 
-    EmployeeNameSearchStrategy employeeNameSearchStrategy = mock(EmployeeNameSearchStrategy.class);
-    EmployeeNumberSearchStrategy employeeNumberSearchStrategy = mock(EmployeeNumberSearchStrategy.class);
+    FullNameSearchStrategy employeeNameSearchStrategy = mock(FullNameSearchStrategy.class);
+    NumberSearchStrategy numberSearchStrategy = mock(NumberSearchStrategy.class);
 
     @BeforeEach
     void setUp() {
@@ -31,81 +32,93 @@ class SearcherTest {
 
     @Test
     void NameSearch_Mock_Test() {
-        Searcher searcher = new Searcher();
-        when(employeeNameSearchStrategy.Search(new HashMap<>(), "WooJung")).thenReturn(new ArrayList<Employee>(){{
-            add(new Employee(1));
-            add(new Employee(2));
-            add(new Employee(3));
-        }});
-        searcher.setSearchStrategy(employeeNameSearchStrategy);
-        ArrayList<Employee> result = searcher.Search(new HashMap<>(), "WooJung");
+        try {
+            Searcher searcher = new Searcher();
+            when(employeeNameSearchStrategy.Search(new HashMap<>(), "WooJung Jung")).thenReturn(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }});
 
-        verify(employeeNameSearchStrategy,times(1)).Search(new HashMap<>(), "WooJung");
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(1));
-            add(new Employee(2));
-            add(new Employee(3));
-        }}.toArray(), result.toArray());
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), employeeNameSearchStrategy.Search(new HashMap<>(), "WooJung Jung").toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
     @Test
     void NumberSearch_Mock_Test() {
-        Searcher searcher = new Searcher();
-        when(employeeNumberSearchStrategy.Search(new HashMap<>(), "WooJung")).thenReturn(new ArrayList<Employee>(){{
-            add(new Employee(3));
-            add(new Employee(2));
-            add(new Employee(1));
-        }});
-        searcher.setSearchStrategy(employeeNumberSearchStrategy);
-        ArrayList<Employee> result = searcher.Search(new HashMap<>(), "WooJung");
 
-        verify(employeeNumberSearchStrategy,times(1)).Search(new HashMap<>(), "WooJung");
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(3));
-            add(new Employee(2));
-            add(new Employee(1));
-        }}.toArray(), result.toArray());
+        try {
+            Searcher searcher = new Searcher();
+            when(numberSearchStrategy.Search(new HashMap<>(), "18028687")).thenReturn(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }});
+            searcher.setSearchStrategy(numberSearchStrategy);
+            ArrayList<Employee> result = searcher.Search(new HashMap<>(), "18028687");
+
+            verify(numberSearchStrategy,times(1)).Search(new HashMap<>(), "18028687");
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), result.toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
     @Test
     void NameSearch_Obj_Test() {
-        Searcher searcher = new Searcher();
+        try {
+            Searcher searcher = new Searcher();
+            HashMap<Integer, Employee> tmp = new HashMap<>();
+            tmp.put(18028687, new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            tmp.put(18028688, new Employee("18028688", "WooJung Jang", "CL2", "010-1674-1674", "19800808", "PRO"));
 
-        searcher.setSearchStrategy(new EmployeeNameSearchStrategy());
-        ArrayList<Employee> result = searcher.Search(new HashMap<>(), "WooJung");
+            searcher.setSearchStrategy(new FullNameSearchStrategy());
+            ArrayList<Employee> result = searcher.Search(tmp, "WooJung Jung");
 
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(1));
-            add(new Employee(2));
-            add(new Employee(3));
-        }}.toArray(), result.toArray());
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), result.toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
     @Test
     void NumberSearch_Obj_Test() {
-        Searcher searcher = new Searcher();
+        try {
+            Searcher searcher = new Searcher();
+            HashMap<Integer, Employee> tmp = new HashMap<>();
+            tmp.put(18028687, new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            tmp.put(18028688, new Employee("18028688", "WooJung Jang", "CL2", "010-1674-1674", "19800808", "PRO"));
 
-        searcher.setSearchStrategy(new EmployeeNumberSearchStrategy());
-        ArrayList<Employee> result = searcher.Search(new HashMap<>(), "WooJung");
+            searcher.setSearchStrategy(new NumberSearchStrategy());
+            ArrayList<Employee> result = searcher.Search(tmp, "18028687");
 
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(3));
-            add(new Employee(2));
-            add(new Employee(1));
-        }}.toArray(), result.toArray());
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), result.toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
     @Test
     void setNameSearchStrategy_Obj_Test() {
         try{
             Searcher searcher = new Searcher();
-            EmployeeNameSearchStrategy employeeNameSearchStrategy = new EmployeeNameSearchStrategy();
+            FullNameSearchStrategy employeeNameSearchStrategy = new FullNameSearchStrategy();
 
             Field field = searcher.getClass().getDeclaredField("strategy");
             field.setAccessible(true);
 
             searcher.setSearchStrategy(employeeNameSearchStrategy);
-            EmployeeNameSearchStrategy strategy = (EmployeeNameSearchStrategy)field.get(searcher);
+            FullNameSearchStrategy strategy = (FullNameSearchStrategy)field.get(searcher);
 
             assertEquals(employeeNameSearchStrategy, strategy);
         } catch (NoSuchFieldException e) {
@@ -119,15 +132,15 @@ class SearcherTest {
     void setNumberSearchStrategy_Obj_Test() {
         try{
             Searcher searcher = new Searcher();
-            EmployeeNumberSearchStrategy employeeNumberSearchStrategy = new EmployeeNumberSearchStrategy();
+            NumberSearchStrategy numberSearchStrategy = new NumberSearchStrategy();
 
             Field field = searcher.getClass().getDeclaredField("strategy");
             field.setAccessible(true);
 
-            searcher.setSearchStrategy(employeeNumberSearchStrategy);
-            EmployeeNumberSearchStrategy strategy = (EmployeeNumberSearchStrategy)field.get(searcher);
+            searcher.setSearchStrategy(numberSearchStrategy);
+            NumberSearchStrategy strategy = (NumberSearchStrategy)field.get(searcher);
 
-            assertEquals(employeeNumberSearchStrategy, strategy);
+            assertEquals(numberSearchStrategy, strategy);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e){

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,30 +24,47 @@ class SearchOptionBuilderTest {
 
     @Test
     void changeSearchStrategy_EmployeeNumber_Obj_Test() {
-        SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder();
-        searchOptionBuilder.changeSearchStrategy("EmployeeNumber");
-        Searcher obj = searchOptionBuilder.getSearcher();
-        ArrayList<Employee> result = obj.Search(new HashMap<>(), "18028687");
+        try {
+            SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder();
+            searchOptionBuilder.changeSearchStrategy("employeeNum", "", "");
+            Searcher obj = searchOptionBuilder.getSearcher();
 
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(3));
-            add(new Employee(2));
-            add(new Employee(1));
-        }}.toArray(), result.toArray());
+            HashMap<Integer, Employee> tmp = new HashMap<>();
+            tmp.put(18028687, new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            tmp.put(18028688, new Employee("18028688", "WooJung Jang", "CL2", "010-1674-1674", "19800808", "PRO"));
+
+            ArrayList<Employee> result = obj.Search(tmp, "18028687");
+
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), result.toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
     @Test
     void changeSearchStrategy_EmployeeName_Obj_Test() {
-        SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder();
-        searchOptionBuilder.changeSearchStrategy("EmployeeName");
-        Searcher obj = searchOptionBuilder.getSearcher();
-        ArrayList<Employee> result = obj.Search(new HashMap<>(), "WooJung");
 
-        assertArrayEquals(new ArrayList<Employee>(){{
-            add(new Employee(1));
-            add(new Employee(2));
-            add(new Employee(3));
-        }}.toArray(), result.toArray());
+        try {
+            SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder();
+            searchOptionBuilder.changeSearchStrategy("name", "", "");
+            Searcher obj = searchOptionBuilder.getSearcher();
+
+            HashMap<Integer, Employee> tmp = new HashMap<>();
+            tmp.put(18028687, new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            tmp.put(18028688, new Employee("18028688", "WooJung Jang", "CL2", "010-1674-1674", "19800808", "PRO"));
+
+            ArrayList<Employee> result = obj.Search(tmp, "WooJung Jung");
+
+            assertArrayEquals(new ArrayList<Employee>(){{
+                add(new Employee("18028687", "WooJung Jung", "CL2", "010-2725-1674", "19000808", "PRO"));
+            }}.toArray(), result.toArray());
+        }
+        catch (ParseException e){
+
+        }
     }
 
 }
