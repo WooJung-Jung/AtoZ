@@ -33,48 +33,44 @@ public class Parser {
 
 		ArrayList<Variable> result = new ArrayList<Variable>();
 
-		for (int i = 0; i < strs.size(); i++) {
-			String[] strArray = strs.get(i).split(",");
-			Variable var = new Variable();
+		try {
+			for (int i = 0; i < strs.size(); i++) {
+				String[] strArray = strs.get(i).split(",");
+				Variable var = new Variable();
 
-			var.command = strArray[0];
-			if (!commandValid(strArray[0])) {
-				continue;
-			}
-			
-			var.option = new Option(strArray[1], strArray[2], strArray[3]);	
-			if (!optionValid(new Option(strArray[1], strArray[2], strArray[3]))) {
-				continue;
-			}
-			
-			var.data = new ArrayList<Data>();
-			if ("ADD".equals(var.command)) {
-				var.data.add(new Data("employeeNum", strArray[4]));
-				var.data.add(new Data("name", strArray[5]));
-				var.data.add(new Data("cl", strArray[6]));
-				var.data.add(new Data("phoneNum", strArray[7]));
-				var.data.add(new Data("birthday", strArray[8]));
-				var.data.add(new Data("certi", strArray[9]));
-			}
+				var.command = strArray[0];
+				var.option = new Option(strArray[1], strArray[2], strArray[3]);
 
-			else if ("DEL".equals(var.command) || "SCH".equals(var.command)) {
-				var.data.add(new Data(strArray[4], strArray[5]));
-			}
+				var.data = new ArrayList<Data>();
+				if ("ADD".equals(var.command) && strArray.length - 4 == 6) {
+					var.data.add(new Data("employeeNum", strArray[4]));
+					var.data.add(new Data("name", strArray[5]));
+					var.data.add(new Data("cl", strArray[6]));
+					var.data.add(new Data("phoneNum", strArray[7]));
+					var.data.add(new Data("birthday", strArray[8]));
+					var.data.add(new Data("certi", strArray[9]));
+				}
 
-			else if ("MOD".equals(var.command)) {
-				var.data.add(new Data(strArray[4], strArray[5]));
-				var.data.add(new Data(strArray[6], strArray[7]));
+				else if (("DEL".equals(var.command) || "SCH".equals(var.command)) && strArray.length - 4 == 2) {
+					var.data.add(new Data(strArray[4], strArray[5]));
+				}
+
+				else if ("MOD".equals(var.command) && strArray.length - 4 == 4) {
+					var.data.add(new Data(strArray[4], strArray[5]));
+					var.data.add(new Data(strArray[6], strArray[7]));
+				}
+				else
+					continue;
+
+				if (commandValid(var.command) && optionValid(var.option)&& dataValid(var.data)) {
+					result.add(var);
+				}
 			}
-			
-			if(!dataValid(var.data)) {
-				continue;
-			}
-			
-			result.add(var);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
-
 		return result;
-
 	}
 
 	boolean commandValid(String cmd) {
@@ -94,7 +90,7 @@ public class Parser {
 			switch (d.column) {
 			case "employeeNum":
 				if (!employeeNumValid(d.value))
-					return false; 
+					return false;
 				break;
 			case "cl":
 				if (!clValid(d.value))
