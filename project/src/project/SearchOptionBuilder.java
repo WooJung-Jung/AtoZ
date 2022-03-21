@@ -15,9 +15,12 @@ public class SearchOptionBuilder {
     public void changeSearchStrategy(String _searchOption){
         if(_searchOption.compareTo("EmployeeNumber") == 0){
             searcher.setSearchStrategy(new EmployeeNumberSearchStrategy());
-            return;
+        } else if(_searchOption.compareTo("EmployeeName") == 0){
+            searcher.setSearchStrategy(new EmployeeNameSearchStrategy());
         }
-        searcher.setSearchStrategy(new EmployeeNameSearchStrategy());
+        else{
+            searcher.setSearchStrategy(new EmployeeNumberSearchStrategy());
+        }
     }
 
     public Searcher getSearcher(){

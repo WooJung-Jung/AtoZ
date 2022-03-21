@@ -8,17 +8,21 @@ public class DisplayOptionBuilder {
         player = new Displayer();
     }
 
-    public DisplayOptionBuilder(boolean isListDisplay){
+    public DisplayOptionBuilder(String _displayOption){
         player = new Displayer();
-        changeDisplayStrategy(isListDisplay);
+        changeDisplayStrategy(_displayOption);
     }
 
-    public void changeDisplayStrategy(boolean isListDisplay){
-        if(isListDisplay){
+    public void changeDisplayStrategy(String _displayOption){
+        if(_displayOption.compareTo("ListDisplay") == 0){
             player.setDisplayStrategy(new ListDisplayStrategy());
             return;
+        }else if(_displayOption.compareTo("CountDisplay") == 0){
+            player.setDisplayStrategy(new CountDisplayStrategy());
         }
-        player.setDisplayStrategy(new CountDisplayStrategy());
+        else{
+            player.setDisplayStrategy(new ListDisplayStrategy());
+        }
     }
 
     public Displayer getPlayer(){

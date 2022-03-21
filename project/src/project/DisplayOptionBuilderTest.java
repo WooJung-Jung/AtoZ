@@ -28,7 +28,7 @@ class DisplayOptionBuilderTest {
     @Test
     void changeDisplayStrategy_ListDisplay_Obj_Test() {
         DisplayOptionBuilder displayOptionBuilder = new DisplayOptionBuilder();
-        displayOptionBuilder.changeDisplayStrategy(true);
+        displayOptionBuilder.changeDisplayStrategy("ListDisplay");
         Displayer obj = displayOptionBuilder.getPlayer();
         obj.Display(new ArrayList<>());
 
@@ -38,7 +38,7 @@ class DisplayOptionBuilderTest {
     @Test
     void changeDisplayStrategy_CountDisplay_Obj_Test() {
         DisplayOptionBuilder displayOptionBuilder = new DisplayOptionBuilder();
-        displayOptionBuilder.changeDisplayStrategy(false);
+        displayOptionBuilder.changeDisplayStrategy("CountDisplay");
         Displayer obj = displayOptionBuilder.getPlayer();
         obj.Display(new ArrayList<>());
 
