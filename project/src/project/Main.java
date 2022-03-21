@@ -11,7 +11,7 @@ public class Main {
 		input = ioManager.read("input.txt");
 		
 		Parser parser = new Parser();
-		ArrayList<Variable> cmd = parser.parse(input);
+		ArrayList<CmdInfo> cmd = parser.parse(input);
 
 	}
 }

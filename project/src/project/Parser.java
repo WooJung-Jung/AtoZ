@@ -22,48 +22,48 @@ class Data {
 	}
 }
 
-class Variable {
+class CmdInfo {
 	String command;
 	Option option;
 	ArrayList<Data> data;
 }
 
 public class Parser {
-	ArrayList<Variable> parse(ArrayList<String> strs) {
+	ArrayList<CmdInfo> parse(ArrayList<String> strs) {
 
-		ArrayList<Variable> result = new ArrayList<Variable>();
+		ArrayList<CmdInfo> result = new ArrayList<CmdInfo>();
 
 		try {
 			for (int i = 0; i < strs.size(); i++) {
 				String[] strArray = strs.get(i).split(",");
-				Variable var = new Variable();
+				CmdInfo cmdInfo = new CmdInfo();
 
-				var.command = strArray[0];
-				var.option = new Option(strArray[1], strArray[2], strArray[3]);
+				cmdInfo.command = strArray[0];
+				cmdInfo.option = new Option(strArray[1], strArray[2], strArray[3]);
 
-				var.data = new ArrayList<Data>();
-				if ("ADD".equals(var.command) && strArray.length - 4 == 6) {
-					var.data.add(new Data("employeeNum", strArray[4]));
-					var.data.add(new Data("name", strArray[5]));
-					var.data.add(new Data("cl", strArray[6]));
-					var.data.add(new Data("phoneNum", strArray[7]));
-					var.data.add(new Data("birthday", strArray[8]));
-					var.data.add(new Data("certi", strArray[9]));
+				cmdInfo.data = new ArrayList<Data>();
+				if ("ADD".equals(cmdInfo.command) && strArray.length - 4 == 6) {
+					cmdInfo.data.add(new Data("employeeNum", strArray[4]));
+					cmdInfo.data.add(new Data("name", strArray[5]));
+					cmdInfo.data.add(new Data("cl", strArray[6]));
+					cmdInfo.data.add(new Data("phoneNum", strArray[7]));
+					cmdInfo.data.add(new Data("birthday", strArray[8]));
+					cmdInfo.data.add(new Data("certi", strArray[9]));
 				}
 
-				else if (("DEL".equals(var.command) || "SCH".equals(var.command)) && strArray.length - 4 == 2) {
-					var.data.add(new Data(strArray[4], strArray[5]));
+				else if (("DEL".equals(cmdInfo.command) || "SCH".equals(cmdInfo.command)) && strArray.length - 4 == 2) {
+					cmdInfo.data.add(new Data(strArray[4], strArray[5]));
 				}
 
-				else if ("MOD".equals(var.command) && strArray.length - 4 == 4) {
-					var.data.add(new Data(strArray[4], strArray[5]));
-					var.data.add(new Data(strArray[6], strArray[7]));
+				else if ("MOD".equals(cmdInfo.command) && strArray.length - 4 == 4) {
+					cmdInfo.data.add(new Data(strArray[4], strArray[5]));
+					cmdInfo.data.add(new Data(strArray[6], strArray[7]));
 				}
 				else
 					continue;
 
-				if (commandValid(var.command) && optionValid(var.option)&& dataValid(var.data)) {
-					result.add(var);
+				if (commandValid(cmdInfo.command) && optionValid(cmdInfo.option)&& dataValid(cmdInfo.data)) {
+					result.add(cmdInfo);
 				}
 			}
 		} catch (Exception e) {
