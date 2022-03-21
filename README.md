@@ -10,6 +10,10 @@
 <li>7. Commit시 코드를 작성하면서 외부 자료에서 알아낸 특이점 있을 시 공유하기</li>
 <li>8. Commit 제목은 의미와 의도를 알 수 있도록 하기</li>
 
+<h2>Git Branch 전략</h2>
+![image](https://user-images.githubusercontent.com/101777810/159229234-1e4d39f6-f560-4297-989d-621105e77b77.png)
+
+
 <h2>Git 커밋 메세지 스타일 가이드</h2>
 <p>참조: https://siyoon210.tistory.com/56</p>
 <h3>메시지 구조</h3>
