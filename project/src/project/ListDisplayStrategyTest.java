@@ -14,8 +14,8 @@ class ListDisplayStrategyTest {
 
     @Test
     void CallListDisplayMethod() {
-        doNothing().when(strategy).Display(new ArrayList<>());
-        strategy.Display(new ArrayList<>());
-        verify(strategy,times(1)).Display(new ArrayList<>());
+        doNothing().when(strategy).Display("SCH", new ArrayList<>());
+        strategy.Display("SCH", new ArrayList<>());
+        verify(strategy,times(1)).Display("SCH", new ArrayList<>());
     }
 }
