@@ -2,13 +2,6 @@ package project;
 
 import java.util.ArrayList;
 
-class Employee{
-    public Employee(int _data){
-        data = _data;
-    }
-    public int data;
-}
-
 public class Displayer {
     private DisplayStrategy strategy;
 

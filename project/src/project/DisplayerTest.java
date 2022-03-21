@@ -9,13 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -97,6 +93,7 @@ class DisplayerTest {
         }
     }
 
+    @Test
     void setCountDisplayStrategy_Obj_Test() {
 
         try{
