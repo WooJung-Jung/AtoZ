@@ -77,7 +77,7 @@ public abstract class Option {
             }
         } else if (type.equals("birthday")) {
             if (opt.equals("-y")) {
-                employee = (ArrayList<Employee>) allEmployee.stream().filter(a -> a.birthday.getMonth() + "" == findStr).collect(Collectors.toList());
+                employee = (ArrayList<Employee>) allEmployee.stream().filter(a -> a.birthday.getYear() + "" == findStr).collect(Collectors.toList());
             } else if (opt.equals("-m")) {
                 employee = (ArrayList<Employee>) allEmployee.stream().filter(a -> a.birthday.getMonth() + "" == findStr).collect(Collectors.toList());
             } else if (opt.equals("-d")) {
