@@ -7,8 +7,8 @@ public class Main {
 		
 		ArrayList<String> input = new ArrayList<String>();
 		
-		IOManager ioManager = new IOManager();
-		input = ioManager.fileRead("input.txt");
+		FileIOManager ioManager = new FileIOManager();
+		input = ioManager.read("input.txt");
 		
 		Parser parser = new Parser();
 		ArrayList<Variable> cmd = parser.parse(input);
