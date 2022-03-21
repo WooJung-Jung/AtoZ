@@ -12,6 +12,7 @@ public class Employee {
     private String phoneNum;
     private Date birthday;
     private String certi;
+    private final int ENTRY_YEAR_OFFSET = 1000000;
 
     public Employee(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) throws ParseException {
         this.employeeNum = Integer.parseInt(employeeNum);
@@ -60,5 +61,13 @@ public class Employee {
                 this.certi = value;
                 break;
         }
+    }
+
+    public Integer getEntryYear() {
+        return employeeNum / ENTRY_YEAR_OFFSET;
+    }
+
+    public Integer getExtraNumber() {
+        return employeeNum % ENTRY_YEAR_OFFSET;
     }
 }
