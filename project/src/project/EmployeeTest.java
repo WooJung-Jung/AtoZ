@@ -34,4 +34,18 @@ public class EmployeeTest {
         int num = employee.getExtraNumber();
         Assertions.assertEquals(123099, num);
     }
+
+    @Test
+    @DisplayName("Equal True")
+    void equalEmployee() {
+        try {
+            String[] arrStr = inputCmdData.split(",");
+            Employee employee1 = new Employee(arrStr[0], arrStr[1], arrStr[2], arrStr[3], arrStr[4], arrStr[5]);
+            Employee employee2 = new Employee(arrStr[0], arrStr[1], arrStr[2], arrStr[3], arrStr[4], arrStr[5]);
+
+            Assertions.assertEquals(employee1, employee2);
+        } catch (Exception ex) {
+            Assertions.fail();
+        }
+    }
 }
