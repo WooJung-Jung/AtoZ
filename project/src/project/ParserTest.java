@@ -28,7 +28,8 @@ class ParserTest {
 		assertFalse(new Parser().phoneNumValid("011-1234-5678"));
 		assertFalse(new Parser().phoneNumValid("010-1234-56789"));
 		
-		assertTrue(new Parser().birthdayValid("20220318"));
+		assertTrue(new Parser().birthdayValid("20220331"));
+		assertFalse(new Parser().birthdayValid("20220332"));
 		
 		assertTrue(new Parser().certiValid("PRO"));
 		assertFalse(new Parser().certiValid("PROO"));

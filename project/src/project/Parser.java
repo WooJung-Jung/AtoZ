@@ -38,15 +38,15 @@ public class Parser {
 			Variable var = new Variable();
 
 			var.command = strArray[0];
-			var.option = new Option(strArray[1], strArray[2], strArray[3]);
-
 			if (!commandValid(strArray[0])) {
 				continue;
 			}
+			
+			var.option = new Option(strArray[1], strArray[2], strArray[3]);	
 			if (!optionValid(new Option(strArray[1], strArray[2], strArray[3]))) {
 				continue;
 			}
-
+			
 			var.data = new ArrayList<Data>();
 			if ("ADD".equals(var.command)) {
 				var.data.add(new Data("employeeNum", strArray[4]));
@@ -133,7 +133,7 @@ public class Parser {
 	}
 
 	boolean birthdayValid(String str) {
-		return Pattern.matches("^\\d{8}$", str);
+		return Pattern.matches("^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$", str);
 	}
 
 	boolean certiValid(String str) {
