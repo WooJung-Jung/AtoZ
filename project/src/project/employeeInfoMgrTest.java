@@ -3,7 +3,9 @@ package project;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -38,12 +40,13 @@ public class employeeInfoMgrTest {
     @DisplayName("When employee exist")
     class WhenExist {
         @Mock
-        private Option2 option2;
+        private SearchStrategy searcher;
         private final Integer employeeNum = 15123099;
+        private final String searchString = "employeeNum,15123099";
 
         @BeforeEach
         void init() {
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
 
             try {
                 String[] arrStr = inputCmdData.split(",");
@@ -56,13 +59,13 @@ public class employeeInfoMgrTest {
         @Test
         @DisplayName("Delete Employee by Mock")
         void delEmployeeByMock() {
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = mock(EmployeeInfoMgr.class);
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
-            when(employeeInfoMgr.delete(any(), any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
+            when(employeeInfoMgr.delete(any(), any(), anyString())).thenReturn(Arrays.asList(employee));
 
-            List<Employee> deleted = employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), option2);
+            List<Employee> deleted = employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), searcher, searchString);
 
             Assertions.assertEquals(false, deleted.isEmpty());
             Assertions.assertEquals(1, deleted.size());
@@ -72,15 +75,15 @@ public class employeeInfoMgrTest {
         @Test
         @DisplayName("Delete Employee by Implement")
         void delEmployeeByImpl() {
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = new EmployeeInfoMgr();
             employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), inputCmdData);
 
             Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
 
-            List<Employee> deletedList = employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), option2);
+            List<Employee> deletedList = employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), searcher, searchString);
 
             Assertions.assertEquals(false, deletedList.isEmpty());
             Assertions.assertEquals(1, deletedList.size());
@@ -92,13 +95,13 @@ public class employeeInfoMgrTest {
         @Test
         @DisplayName("Search Employee by Mock")
         void SearchEmployeeByMock() {
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = mock(EmployeeInfoMgr.class);
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
-            when(employeeInfoMgr.search(any(), any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
+            when(employeeInfoMgr.search(any(), any(), anyString())).thenReturn(Arrays.asList(employee));
 
-            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), option2);
+            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), searcher, searchString);
 
             Assertions.assertEquals(false, findedList.isEmpty());
             Assertions.assertEquals(1, findedList.size());
@@ -108,13 +111,13 @@ public class employeeInfoMgrTest {
         @Test
         @DisplayName("Search Employee by Impl")
         void SearchEmployeeByImpl() {
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = new EmployeeInfoMgr();
             employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), inputCmdData);
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
 
-            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), option2);
+            List<Employee> findedList = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), searcher, searchString);
 
             Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
             Assertions.assertEquals(false, findedList.isEmpty());
@@ -129,14 +132,14 @@ public class employeeInfoMgrTest {
         void ModifyEmployeeByMock() {
             String commandData = "name,FB NTAWR,cl,CL3";
 
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = mock(EmployeeInfoMgr.class);
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
             try {
                 when(employeeInfoMgr.modify(any(), any(), anyString())).thenReturn(Arrays.asList(employee));
 
-                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), option2, commandData);
+                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searcher, commandData);
 
                 Assertions.assertEquals(false, prevList.isEmpty());
                 Assertions.assertEquals(1, prevList.size());
@@ -153,14 +156,14 @@ public class employeeInfoMgrTest {
             String commandData = "name,VXIHXOTH JHOP,cl,CL4";
             String modifiedData = "15123099,VXIHXOTH JHOP,CL4,010-3112-2609,19771211,ADV";
 
-            option2 = mock(Option2.class);
+            searcher = mock(SearchStrategy.class);
             employeeInfoMgr = new EmployeeInfoMgr();
             employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), inputCmdData);
 
-            when(option2.execute(any())).thenReturn(Arrays.asList(employee));
+            when(searcher.Search(any(), anyString())).thenReturn(new ArrayList<Employee>(Arrays.asList(employee)));
 
             try {
-                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), option2, commandData);
+                List<Employee> prevList = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searcher, commandData);
 
                 Assertions.assertEquals(1, employeeInfo.getInfoTable("employeeNum").size());
                 Assertions.assertEquals(false, prevList.isEmpty());
