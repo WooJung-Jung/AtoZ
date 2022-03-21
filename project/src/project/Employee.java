@@ -70,4 +70,14 @@ public class Employee {
     public Integer getExtraNumber() {
         return employeeNum % ENTRY_YEAR_OFFSET;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!obj.getClass().equals(Employee.class)) return false;
+
+        Employee employee = (Employee)obj;
+        if(this.getEmployeeNum().equals(employee.getEmployeeNum())) return true;
+        return false;
+    }
 }
