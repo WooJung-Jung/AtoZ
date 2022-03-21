@@ -24,6 +24,13 @@ public class Employee {
     }
 
     public Integer getEmployeeNum() { return employeeNum; }
+    public String getName() { return firstName + " " + lastName; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getCl() { return cl; }
+    public String getPhoneNum() { return phoneNum; }
+    public Date getBirthday() { return birthday; }
+    public String getCerti() { return certi; }
 
     public String print() {
         return employeeNum + ","
