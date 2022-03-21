@@ -40,14 +40,12 @@ public class FileIOManager implements IOManager<String> {
 			File file = new File(path);
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-			if (file.isFile() && file.canWrite()) {
-				for (String content : contents) {
-					bufferedWriter.write(content);
-					bufferedWriter.newLine();
-				}
-				bufferedWriter.close();
-
+			for (String content : contents) {
+				bufferedWriter.write(content);
+				bufferedWriter.newLine();
 			}
+			bufferedWriter.close();
+
 		} catch (IOException e) {
 			e.getStackTrace();
 		}
