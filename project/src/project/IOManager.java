@@ -2,14 +2,16 @@ package project;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class IOManager {
 	
-	ArrayList<String> read(String path) {
+	ArrayList<String> fileRead(String path) {
 		
 		ArrayList<String> input = new ArrayList<String>();
 		try {
@@ -30,4 +32,19 @@ public class IOManager {
 		
 		return input;
 	}
+	
+	void fileWrite(String path, String content) {
+		 try{
+	            File file = new File(path);
+	            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+	            
+	            if(file.isFile() && file.canWrite()){
+	                bufferedWriter.write(content);   
+	                bufferedWriter.close();
+	            }
+	        }catch (IOException e) {
+	            System.out.println(e);
+	        }
+	}
+	
 }
