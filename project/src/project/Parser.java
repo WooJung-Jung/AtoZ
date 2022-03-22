@@ -25,7 +25,7 @@ class Data {
 class CmdInfo {
 	String command;
 	Option option;
-	ArrayList<Data> data;
+	ArrayList<Data> commandData;
 }
 
 public class Parser {
@@ -41,28 +41,31 @@ public class Parser {
 				cmdInfo.command = strArray[0];
 				cmdInfo.option = new Option(strArray[1], strArray[2], strArray[3]);
 
-				cmdInfo.data = new ArrayList<Data>();
+				cmdInfo.commandData = new ArrayList<Data>();
 				if ("ADD".equals(cmdInfo.command) && strArray.length - 4 == 6) {
-					cmdInfo.data.add(new Data("employeeNum", strArray[4]));
-					cmdInfo.data.add(new Data("name", strArray[5]));
-					cmdInfo.data.add(new Data("cl", strArray[6]));
-					cmdInfo.data.add(new Data("phoneNum", strArray[7]));
-					cmdInfo.data.add(new Data("birthday", strArray[8]));
-					cmdInfo.data.add(new Data("certi", strArray[9]));
+					cmdInfo.commandData.add(new Data("employeeNum", strArray[4]));
+					cmdInfo.commandData.add(new Data("name", strArray[5]));
+					cmdInfo.commandData.add(new Data("cl", strArray[6]));
+					cmdInfo.commandData.add(new Data("phoneNum", strArray[7]));
+					cmdInfo.commandData.add(new Data("birthday", strArray[8]));
+					cmdInfo.commandData.add(new Data("certi", strArray[9]));
+					if(!dataValid(cmdInfo.commandData)) {
+						continue;
+					}
 				}
 
 				else if (("DEL".equals(cmdInfo.command) || "SCH".equals(cmdInfo.command)) && strArray.length - 4 == 2) {
-					cmdInfo.data.add(new Data(strArray[4], strArray[5]));
+					cmdInfo.commandData.add(new Data(strArray[4], strArray[5]));
 				}
 
 				else if ("MOD".equals(cmdInfo.command) && strArray.length - 4 == 4) {
-					cmdInfo.data.add(new Data(strArray[4], strArray[5]));
-					cmdInfo.data.add(new Data(strArray[6], strArray[7]));
+					cmdInfo.commandData.add(new Data(strArray[4], strArray[5]));
+					cmdInfo.commandData.add(new Data(strArray[6], strArray[7]));
 				}
 				else
 					continue;
 
-				if (commandValid(cmdInfo.command) && optionValid(cmdInfo.option)&& dataValid(cmdInfo.data)) {
+				if (commandValid(cmdInfo.command) && optionValid(cmdInfo.option)) {
 					result.add(cmdInfo);
 				}
 			}

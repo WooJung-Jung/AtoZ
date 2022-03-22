@@ -2,7 +2,9 @@ package project;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
     private Integer employeeNum;
@@ -40,6 +42,14 @@ public class Employee {
                 + phoneNum + ","
                 + new SimpleDateFormat("yyyyMMdd").format(birthday) + ","
                 + certi;
+    }
+    
+    public static String printAll(List<Employee> list) {
+    	String ret = "";
+		for(Employee emp : list) {
+			ret += emp.print();
+		}
+    	return ret;
     }
 
     public void modify(String field, String value) throws ParseException {

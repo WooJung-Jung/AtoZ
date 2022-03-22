@@ -9,7 +9,7 @@ public class LastPhoneSearchStrategy implements SearchStrategy{
         ArrayList<Employee> employees = new ArrayList<Employee>();
         for (Integer item : table.keySet()) {
             if (target.equals((table.get(item).getPhoneNum().split("-")[2]))) {
-                employees.add(employees.get(item));
+                employees.add(table.get(item));
             }
         }
         return employees;

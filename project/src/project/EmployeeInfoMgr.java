@@ -6,12 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeInfoMgr {
-    public boolean add(HashMap<Integer, Employee> employeeHashMap, String commandData) {
+    public boolean add(HashMap<Integer, Employee> employeeHashMap, ArrayList<Data> commandData) {
         try {
-            String[] params = commandData.split(",");
-            if (params.length != 6) return false;
-
-            Employee employee = new Employee(params[0], params[1], params[2], params[3], params[4], params[5]);
+        	Employee employee = new Employee(commandData.get(0).value, commandData.get(1).value, commandData.get(2).value
+        			, commandData.get(3).value, commandData.get(4).value, commandData.get(5).value);
             employeeHashMap.put(employee.getEmployeeNum(), employee);
             return true;
         } catch (ParseException e) {
@@ -19,31 +17,22 @@ public class EmployeeInfoMgr {
         }
     }
 
-    public List<Employee> delete(HashMap<Integer,Employee> employeeHashMap, SearchStrategy searcher, String commandData) {
-        String[] params = commandData.split(",");
-        if (params.length != 2) return new ArrayList<Employee>();
-
-        ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, params[1]);
+    public List<Employee> delete(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
+    	ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
         for(Employee employee : employeeList) {
             employeeHashMap.remove(employee.getEmployeeNum());
         }
         return employeeList;
     }
 
-    public List<Employee> search(HashMap<Integer,Employee> employeeHashMap, SearchStrategy searcher, String commandData) {
-        String[] params = commandData.split(",");
-        if (params.length != 2) return new ArrayList<Employee>();
-
-        return searcher.Search(employeeHashMap, params[1]);
+    public List<Employee> search(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
+    	return searcher.Search(employeeHashMap, commandData.get(0).value);
     }
 
-    public List<Employee> modify(HashMap<Integer, Employee> employeeHashMap, SearchStrategy searcher, String commandData) throws Exception {
-        String[] param = commandData.split(",");
-        if (param.length != 4) return new ArrayList<Employee>();
-
-        List<Employee> employeeList = searcher.Search(employeeHashMap, param[1]);
+    public List<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) throws Exception {
+    	List<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
         for(Employee employee : employeeList) {
-            employeeHashMap.get(employee.getEmployeeNum()).modify(param[2], param[3]);
+        	employeeHashMap.get(employee.getEmployeeNum()).modify(commandData.get(1).column, commandData.get(1).value);
         }
         return employeeList;
     }

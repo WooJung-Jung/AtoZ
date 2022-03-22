@@ -29,7 +29,7 @@ public class SearchOptionBuilder {
             return;
         }
         else if(_category.compareTo("cl") == 0){
-            searcher.setSearchStrategy(new FullNameSearchStrategy());
+            searcher.setSearchStrategy(new CLSearchStrategy());
             return;
         }
         else if(_category.compareTo("phoneNum") == 0){
@@ -61,7 +61,7 @@ public class SearchOptionBuilder {
             return;
         }
         else if(_category.compareTo("certi") == 0){
-            searcher.setSearchStrategy(new FullNameSearchStrategy());
+            searcher.setSearchStrategy(new CertiSearchStrategy());
             return;
         }
         searcher.setSearchStrategy(new NumberSearchStrategy());
