@@ -8,8 +8,8 @@ public class YearBirthSearchStrategy implements SearchStrategy{
     public ArrayList<Employee> Search(HashMap<Integer, Employee> table, String target) {
         ArrayList<Employee> employees = new ArrayList<Employee>();
         for (Integer item : table.keySet()) {
-            if (target.equals((table.get(item).getBirthday().getYear()))) {
-                employees.add(employees.get(item));
+            if (target.equals((table.get(item).getBirthdayYear()))) {
+                employees.add(table.get(item));
             }
         }
         return employees;
