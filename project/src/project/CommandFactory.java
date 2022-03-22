@@ -1,6 +1,6 @@
 package project;
 
-public class CommandBuilder {
+public class CommandFactory {
     static Command createCommand(CmdInfo cmdInfo, Searcher searcher) {
         switch (cmdInfo.command) {
             case "ADD": return new AddCommand();

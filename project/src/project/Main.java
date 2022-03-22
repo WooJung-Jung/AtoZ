@@ -2,7 +2,6 @@ package project;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -33,7 +32,7 @@ public class Main {
 			searchOptionBuilder.changeSearchStrategy(cmd.commandData.get(0).column, cmd.option.opt2, "");
 			displayOptionBuilder.changeDisplayStrategy(cmd.option.opt1);
 
-			Command command = CommandBuilder.createCommand(cmd, searchOptionBuilder.getSearcher());
+			Command command = CommandFactory.createCommand(cmd, searchOptionBuilder.getSearcher());
 			command.execute(cmd, employeeInfo, employeeInfoMgr);
 
 			if (command.hasResult())
