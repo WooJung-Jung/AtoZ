@@ -34,6 +34,9 @@ public class ListDisplayStrategy implements DisplayStrategy{
         
         Collections.sort(employees, new EmployeeComparator());
         for(Employee item : employees) {
+            if(cnt++ != 0){
+                ret += "\n";
+            }
             ret += Cmd + "," + item.getEmployeeNum() + "," + item.getFirstName() + "," + item.getLastName() + "," + item.getCl() + "," + item.getPhoneNum() + "," + item.getBirthday() + "," + item.getCerti();
             if(++cnt == 5){
                 break;
