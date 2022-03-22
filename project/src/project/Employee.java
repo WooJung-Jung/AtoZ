@@ -44,14 +44,6 @@ public class Employee {
                 + birthday + ","
                 + certi;
     }
-    
-    public static String printAll(List<Employee> list) {
-    	String ret = "";
-		for(Employee emp : list) {
-			ret += emp.print();
-		}
-    	return ret;
-    }
 
     public void modify(String field, String value) throws ParseException {
         switch (field) {

@@ -14,14 +14,11 @@ public class DisplayOptionBuilder {
     }
 
     public void changeDisplayStrategy(String _displayOption){
-        if(_displayOption.compareTo("ListDisplay") == 0){
+        if(_displayOption.compareTo("-p") == 0){
             player.setDisplayStrategy(new ListDisplayStrategy());
             return;
-        }else if(_displayOption.compareTo("CountDisplay") == 0){
+        }else if(_displayOption.compareTo("-p") != 0){
             player.setDisplayStrategy(new CountDisplayStrategy());
-        }
-        else{
-            player.setDisplayStrategy(new ListDisplayStrategy());
         }
     }
 

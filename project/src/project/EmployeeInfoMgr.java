@@ -17,7 +17,7 @@ public class EmployeeInfoMgr {
         }
     }
 
-    public List<Employee> delete(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
+    public ArrayList<Employee> delete(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
     	ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
         for(Employee employee : employeeList) {
             employeeHashMap.remove(employee.getEmployeeNum());
@@ -25,12 +25,12 @@ public class EmployeeInfoMgr {
         return employeeList;
     }
 
-    public List<Employee> search(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
+    public ArrayList<Employee> search(HashMap<Integer,Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
     	return searcher.Search(employeeHashMap, commandData.get(0).value);
     }
 
-    public List<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) throws Exception {
-    	List<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
+    public ArrayList<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) throws Exception {
+    	ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
         for(Employee employee : employeeList) {
         	employeeHashMap.get(employee.getEmployeeNum()).modify(commandData.get(1).column, commandData.get(1).value);
         }
