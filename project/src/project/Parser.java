@@ -48,7 +48,10 @@ public class Parser {
 					cmdInfo.commandData.add(new Data("cl", strArray[6]));
 					cmdInfo.commandData.add(new Data("phoneNum", strArray[7]));
 					cmdInfo.commandData.add(new Data("birthday", strArray[8]));
-					cmdInfo.commandData.add(new Data("certi", strArray[9]));	
+					cmdInfo.commandData.add(new Data("certi", strArray[9]));
+					if(!dataValid(cmdInfo.commandData)) {
+						continue;
+					}
 				}
 
 				else if (("DEL".equals(cmdInfo.command) || "SCH".equals(cmdInfo.command)) && strArray.length - 4 == 2) {
@@ -62,7 +65,7 @@ public class Parser {
 				else
 					continue;
 
-				if (commandValid(cmdInfo.command) && optionValid(cmdInfo.option)&& dataValid(cmdInfo.commandData)) {
+				if (commandValid(cmdInfo.command) && optionValid(cmdInfo.option)) {
 					result.add(cmdInfo);
 				}
 			}
