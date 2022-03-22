@@ -1,6 +1,7 @@
 package project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -14,28 +15,33 @@ public class Main {
 		ArrayList<CmdInfo> cmds = parser.parse(input);
 
 		EmployeeInfo employeeInfo = new EmployeeInfo();
-		ArrayList<String> output = new ArrayList<String>();
-
+		SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder();
+		DisplayOptionBuilder displayOptionBuilder = new DisplayOptionBuilder();
+		ArrayList<Employee> ret = new ArrayList<Employee>();
+		
 		for (CmdInfo cmd : cmds) {
 			EmployeeInfoMgr employeeInfoMgr = new EmployeeInfoMgr();
-
+			
+			searchOptionBuilder.changeSearchStrategy(cmd.commandData.get(0).column, cmd.option.opt2, "");
+			displayOptionBuilder.changeDisplayStrategy(cmd.option.opt1);
+			
 			if ("ADD".equals(cmd.command)) {
 				employeeInfoMgr.add(employeeInfo.getInfoTable("employeeNum"), cmd.commandData);
 			} 
 			else if ("DEL".equals(cmd.command)) {
-				SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder(cmd.commandData.get(0).column, cmd.option.opt2, "");
-				output.add(Employee.printAll(employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData)));
+				ret = employeeInfoMgr.delete(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData);
 			} 			
-			else if ("SCH".equals(cmd.command)) {
-				SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder(cmd.commandData.get(0).column, cmd.option.opt2, "");
-				output.add(Employee.printAll(employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData)));
+			else if ("SCH".equals(cmd.command)) {			
+				ret = employeeInfoMgr.search(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData);
 			} 
 			else if ("MOD".equals(cmd.command)) {
-				SearchOptionBuilder searchOptionBuilder = new SearchOptionBuilder(cmd.commandData.get(0).column, cmd.option.opt2, "");
-				output.add(Employee.printAll(employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData)));
+				ret = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData);
 			}
-
-			ioManager.write("output.txt", output);
+			
+			if(!ret.isEmpty()) {
+				ioManager.write("output.txt", displayOptionBuilder.getPlayer().Display(cmd.command, ret));
+			}
+			ret.clear();
 		}
 	}
 }

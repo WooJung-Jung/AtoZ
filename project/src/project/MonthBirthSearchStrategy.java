@@ -8,7 +8,7 @@ public class MonthBirthSearchStrategy implements SearchStrategy{
     public ArrayList<Employee> Search(HashMap<Integer, Employee> table, String target) {
         ArrayList<Employee> employees = new ArrayList<Employee>();
         for (Integer item : table.keySet()) {
-            if (target.equals((table.get(item).getBirthday().getMonth()))) {
+            if (target.equals((table.get(item).getBirthdayMonth()))) {
                 employees.add(table.get(item));
             }
         }

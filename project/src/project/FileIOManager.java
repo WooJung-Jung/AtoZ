@@ -35,15 +35,14 @@ public class FileIOManager implements IOManager<String> {
 	}
 
 	@Override
-	public void write(String path, ArrayList<String> contents) {
+	public void write(String path, String content) {
 		try {
 			File file = new File(path);
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
 
-			for (String content : contents) {
-				bufferedWriter.write(content);
-				bufferedWriter.newLine();
-			}
+			bufferedWriter.write(content);
+			bufferedWriter.newLine();
+			
 			bufferedWriter.close();
 
 		} catch (IOException e) {

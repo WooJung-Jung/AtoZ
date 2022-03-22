@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class CountDisplayStrategy implements DisplayStrategy{
     @Override
-    public void Display(String Cmd, ArrayList<Employee> employees) {
+    public String Display(String Cmd, ArrayList<Employee> employees) {
         if(employees.size() == 0) {
-            System.out.println(Cmd + ",NONE");
-            return;
+            return Cmd + ",NONE";
         }
-        System.out.println(Cmd + "," + employees.size());
+        
+        return Cmd + "," + employees.size();
     }
 }

@@ -24,18 +24,22 @@ class EmployeeComparator implements Comparator<Employee> {
 public class ListDisplayStrategy implements DisplayStrategy{
 
     @Override
-    public void Display(String Cmd, ArrayList<Employee> employees) {
+    public String Display(String Cmd, ArrayList<Employee> employees) {
         int cnt = 0;
+        String ret = "";
+        
         if(employees.size() == 0) {
-            System.out.println(Cmd + ",NONE");
-            return;
+            return Cmd + ",NONE";
         }
+        
         Collections.sort(employees, new EmployeeComparator());
         for(Employee item : employees) {
-            System.out.println(Cmd + "," + item.getEmployeeNum() + "," + item.getFirstName() + "," + item.getLastName() + "," + item.getCl() + "," + item.getPhoneNum() + "," + item.getBirthday() + "," + item.getCerti());
+            ret += Cmd + "," + item.getEmployeeNum() + "," + item.getFirstName() + "," + item.getLastName() + "," + item.getCl() + "," + item.getPhoneNum() + "," + item.getBirthday() + "," + item.getCerti();
             if(++cnt == 5){
                 break;
             }
         }
+        
+        return ret;
     }
 }
