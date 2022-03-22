@@ -1,5 +1,6 @@
 package project;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,10 @@ public class Main {
 		ArrayList<String> input = new ArrayList<String>();
 
 		FileIOManager ioManager = new FileIOManager();
-		input = ioManager.read("input.txt");
+		input = ioManager.read("D:\\code\\git\\AtoZ\\input.txt");
+
+		if (new File("D:\\code\\git\\AtoZ\\output.txt").exists())
+			new File("D:\\code\\git\\AtoZ\\output.txt").delete();
 
 		Parser parser = new Parser();
 		ArrayList<CmdInfo> cmds = parser.parse(input);
@@ -37,9 +41,9 @@ public class Main {
 			else if ("MOD".equals(cmd.command)) {
 				ret = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData);
 			}
-			
-			if(!ret.isEmpty()) {
-				ioManager.write("output.txt", displayOptionBuilder.getPlayer().Display(cmd.command, ret));
+
+			if ("ADD".equals(cmd.command) == false) {
+				ioManager.write("D:\\code\\git\\AtoZ\\output.txt", displayOptionBuilder.getPlayer().Display(cmd.command, ret));
 			}
 			ret.clear();
 		}

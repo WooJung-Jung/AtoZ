@@ -7,7 +7,8 @@ public class NumberSearchStrategy implements SearchStrategy{
     @Override
     public ArrayList<Employee> Search(HashMap<Integer, Employee> table, String target) {
         ArrayList<Employee> employees = new ArrayList<Employee>();
-        employees.add(table.get(Integer.parseInt(target)));
+        if (table.containsKey(Integer.parseInt(target)))
+            employees.add(table.get(Integer.parseInt(target)));
         return employees;
     }
 }

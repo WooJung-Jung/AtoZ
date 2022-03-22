@@ -7,17 +7,16 @@ import java.util.Collections;
 class EmployeeComparator implements Comparator<Employee> {
     @Override
     public int compare(Employee emp1, Employee emp2) {
-        int emp1Num = emp1.getEmployeeNum();
-        int emp2Num = emp2.getEmployeeNum();
+        String emp1Num;
+        String emp2Num;
 
-        if(emp1Num < 69000000) emp1Num = emp1Num*100000000;
-        if(emp2Num < 69000000) emp2Num = emp2Num*100000000;
-        if (emp1Num > emp2Num) {
-            return 1;
-        } else if (emp1Num < emp2Num) {
-            return -1;
-        }
-        return 0;
+        if(emp1.getEntryYear() < 69) emp1Num = String.format("20%08d", emp1.getEmployeeNum());
+        else emp1Num = String.format("19%08d", emp1.getEmployeeNum());
+
+        if(emp2.getEntryYear() < 69) emp2Num = String.format("20%08d", emp2.getEmployeeNum());
+        else emp2Num = String.format("19%08d", emp2.getEmployeeNum());
+
+        return emp1Num.compareTo(emp2Num);
     }
 }
 
@@ -27,22 +26,19 @@ public class ListDisplayStrategy implements DisplayStrategy{
     public String Display(String Cmd, ArrayList<Employee> employees) {
         int cnt = 0;
         String ret = "";
-        
+
         if(employees.size() == 0) {
-            return Cmd + ",NONE";
+            return Cmd + ",NONE" + "\r\n";
         }
-        
-        Collections.sort(employees, new EmployeeComparator());
+
+        employees.sort(new EmployeeComparator());
         for(Employee item : employees) {
-            if(cnt++ != 0){
-                ret += "\n";
-            }
-            ret += Cmd + "," + item.getEmployeeNum() + "," + item.getFirstName() + "," + item.getLastName() + "," + item.getCl() + "," + item.getPhoneNum() + "," + item.getBirthday() + "," + item.getCerti();
+            ret += Cmd + "," + item.print() + "\r\n";
             if(++cnt == 5){
                 break;
             }
         }
-        
+
         return ret;
     }
 }

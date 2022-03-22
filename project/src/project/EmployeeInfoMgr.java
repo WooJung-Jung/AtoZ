@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmployeeInfoMgr {
     public boolean add(HashMap<Integer, Employee> employeeHashMap, ArrayList<Data> commandData) {
@@ -31,9 +32,11 @@ public class EmployeeInfoMgr {
 
     public ArrayList<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) throws Exception {
     	ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
+        ArrayList<Employee> result = new ArrayList<>();
         for(Employee employee : employeeList) {
+            result.add(new Employee(employeeHashMap.get(employee.getEmployeeNum())));
         	employeeHashMap.get(employee.getEmployeeNum()).modify(commandData.get(1).column, commandData.get(1).value);
         }
-        return employeeList;
+        return result;
     }
 }
