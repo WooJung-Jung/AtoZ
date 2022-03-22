@@ -30,7 +30,7 @@ public class EmployeeInfoMgr {
     	return searcher.Search(employeeHashMap, commandData.get(0).value);
     }
 
-    public ArrayList<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) throws Exception {
+    public ArrayList<Employee> modify(HashMap<Integer, Employee> employeeHashMap, Searcher searcher, ArrayList<Data> commandData) {
     	ArrayList<Employee> employeeList = searcher.Search(employeeHashMap, commandData.get(0).value);
         ArrayList<Employee> result = new ArrayList<>();
         for(Employee employee : employeeList) {

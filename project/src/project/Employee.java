@@ -54,7 +54,7 @@ public class Employee {
                 + certi;
     }
 
-    public void modify(String field, String value) throws ParseException {
+    public void modify(String field, String value) {
         switch (field) {
             case "name":
                 this.name = value;
