@@ -41,7 +41,6 @@ public class FileIOManager implements IOManager<String> {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
 
 			bufferedWriter.write(content);
-			bufferedWriter.newLine();
 			
 			bufferedWriter.close();
 

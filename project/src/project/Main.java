@@ -1,15 +1,24 @@
 package project;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
+		if (args.length != 2) {
+			System.out.println("Invalid arguments error: <input file> <output file>");
+			return;
+		}
 
-		ArrayList<String> input = new ArrayList<String>();
+		String inputFile = args[0];
+		String outputFile = args[1];
 
 		FileIOManager ioManager = new FileIOManager();
-		input = ioManager.read("input.txt");
+		ArrayList<String> input = ioManager.read(inputFile);
+
+		if (new File(outputFile).exists())
+			new File(outputFile).delete();
 
 		Parser parser = new Parser();
 		ArrayList<CmdInfo> cmds = parser.parse(input);
@@ -37,9 +46,9 @@ public class Main {
 			else if ("MOD".equals(cmd.command)) {
 				ret = employeeInfoMgr.modify(employeeInfo.getInfoTable("employeeNum"), searchOptionBuilder.getSearcher(), cmd.commandData);
 			}
-			
-			if(!ret.isEmpty()) {
-				ioManager.write("output.txt", displayOptionBuilder.getPlayer().Display(cmd.command, ret));
+
+			if ("ADD".equals(cmd.command) == false) {
+				ioManager.write(outputFile, displayOptionBuilder.getPlayer().Display(cmd.command, ret));
 			}
 			ret.clear();
 		}

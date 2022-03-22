@@ -24,6 +24,15 @@ public class Employee {
         this.certi = certi;
     }
 
+    public Employee(Employee employee) {
+        this.employeeNum = employee.getEmployeeNum();
+        this.name = employee.getName();
+        this.cl = employee.getCl();
+        this.phoneNum = employee.getPhoneNum();
+        this.birthday = employee.getBirthday();
+        this.certi = employee.getCerti();
+    }
+
     public Integer getEmployeeNum() { return employeeNum; }
     public String getName() { return name; }
     public String getFirstName() { return name.substring(0, name.indexOf(' ')); }
@@ -37,7 +46,7 @@ public class Employee {
     public String getCerti() { return certi; }
 
     public String print() {
-        return employeeNum + ","
+        return String.format("%08d",employeeNum) + ","
                 + name + ","
                 + cl  + ","
                 + phoneNum + ","
